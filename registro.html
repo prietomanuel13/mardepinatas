@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - MAR PIÑATAS</title>
+  <style>
+    body{
+      margin:0;
+      font-family:"Poppins",sans-serif;
+      background:linear-gradient(135deg,#ff69b4,#80c0ff);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .box{
+      width:350px;
+      padding:30px;
+      background:rgba(255,255,255,0.18);
+      backdrop-filter:blur(12px);
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,0.35);
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+      text-align:center;
+    }
+
+    h2{color:#222;margin-bottom:20px;}
+
+    input{
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border-radius:25px;
+      border:none;
+      outline:none;
+      font-size:1rem;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      margin-top:15px;
+      background:#0a0a23;
+      color:white;
+      border:none;
+      border-radius:30px;
+      font-size:1.1rem;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    button:hover{background:#ff4081;}
+
+    #msg{
+      margin-top:15px;
+      font-weight:bold;
+      color:#c00;
+    }
+
+    a{
+      display:block;
+      margin-top:15px;
+      text-decoration:none;
+      font-weight:bold;
+      color:#0a0a23;
+    }
+
+    a:hover{color:#ff4081;}
+
+
+.success{
+  color:#0f9d58 !important;
+}
+
+.error{
+  color:#d93025 !important;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Crear Cuenta</h2>
+
+<form id="formRegistro">
+
+
+
+  <input
+    type="text"
+    id="nombre"
+    placeholder="Nombre completo"
+    required
+  >
+
+  <input
+    type="email"
+    id="correo"
+    placeholder="Correo electrónico"
+    required
+  >
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Contraseña"
+    required
+  >
+
+  <input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirmar contraseña"
+    required
+  >
+
+  <button type="submit">
+    Crear Cuenta
+  </button>
+
+</form>
+
+  <p id="msg"></p>
+  <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
+</div>
+
+<script>
+
+/* FORMULARIO */
+const form =
+  document.getElementById("formRegistro");
+
+form.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const nombre =
+    document.getElementById("nombre").value.trim();
+
+  const correo =
+    document.getElementById("correo").value.trim();
+
+  const password =
+    document.getElementById("password").value.trim();
+
+  const confirmPassword =
+    document.getElementById("confirmPassword").value.trim();
+
+  const msg =
+    document.getElementById("msg");
+
+  /* VALIDAR PASSWORD */
+  if(password !== confirmPassword){
+
+    msg.textContent =
+      "Las contraseñas no coinciden ❌";
+
+    msg.className = "error";
+
+    return;
+
+  }
+
+  /* USUARIOS */
+  let usuarios =
+    JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  /* VALIDAR CORREO */
+  if(usuarios.some(u => u.correo === correo)){
+
+    msg.textContent =
+      "Ese correo ya está registrado ❌";
+
+    msg.className = "error";
+
+    return;
+
+  }
+
+  /* CREAR USUARIO */
+  const nuevoUsuario = {
+
+    nombre,
+    correo,
+    password
+
+  };
+
+  /* GUARDAR */
+  usuarios.push(nuevoUsuario);
+
+  localStorage.setItem(
+    "usuarios",
+    JSON.stringify(usuarios)
+  );
+
+  /* LOGIN AUTOMATICO */
+  localStorage.setItem(
+    "usuarioActivo",
+    JSON.stringify(nuevoUsuario)
+  );
+
+  msg.textContent =
+    "Cuenta creada correctamente ✅";
+
+  msg.className = "success";
+
+  /* REDIRECCION */
+  setTimeout(() => {
+
+    window.location.href =
+      "index.html";
+
+  }, 1200);
+
+});
+
+</script>
+
+</body>
+</html>

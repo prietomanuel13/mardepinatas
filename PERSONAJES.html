@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAR PIÑATAS</title>
+ 
+
+  <style>
+/* ---------------------------------------------------
+   FUENTE GENERAL + FONDO
+--------------------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  background: linear-gradient(135deg, #ff69b4, #80c0ff);
+  background-attachment: fixed;
+  background-size: cover;
+
+  padding-top: 100px !important; /* Para que el navbar no tape el contenido */
+}
+
+/* ---------------------------------------------------
+   NAVBAR
+--------------------------------------------------- */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.nav-container {
+  width: 95%;
+  max-width: 1200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* LINKS */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #222;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.6);
+  transform: scale(1.05);
+}
+
+/* MENU MOVIL */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #222;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 85px;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+    background: rgba(255,255,255,0.4);
+    padding: 15px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
+/* ---------------------------------------------------
+   TITULO
+--------------------------------------------------- */
+.titulo-principal {
+  margin: 40px 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* ---------------------------------------------------
+   CONTENEDOR PRINCIPAL
+--------------------------------------------------- */
+.contenedor-principal {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* ---------------------------------------------------
+   GALERÍA DE PRODUCTOS
+--------------------------------------------------- */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin: 40px 20px;
+}
+
+/* ---------------------------------------------------
+   TARJETA DE PRODUCTO - EFECTO GLASS
+--------------------------------------------------- */
+.tarjeta-producto {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 20px; /* EL VOLOR ORIGINAL ERA 2OPX*/
+  padding: 15px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover */
+.tarjeta-producto:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Imagen */
+.tarjeta-producto img,
+.producto-img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.4s ease;
+}
+
+/* Zoom */
+.tarjeta-producto:hover img {
+  transform: scale(1.1);
+}
+
+/* ---------------------------------------------------
+   CORAZÓN DE FAVORITOS
+--------------------------------------------------- */
+.corazon-btn,
+.favorito {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: 0.3s;
+  text-shadow: 0px 0px 5px rgba(255,255,255,0.7);
+  z-index: 20;
+}
+
+.corazon-btn.activo,
+.favorito.activo {
+  color: red;
+  transform: scale(1.2);
+}
+
+.corazon-btn:hover,
+.favorito:hover {
+  transform: scale(1.25);
+}
+
+/* ---------------------------------------------------
+   INFO DEL PRODUCTO
+--------------------------------------------------- */
+.info-producto h2 {
+  margin: 12px 0 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.info-producto p {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.precio {
+  font-size: 1.2rem;
+  color: #ff4081;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ---------------------------------------------------
+   BOTÓN VER MÁS
+--------------------------------------------------- */
+.boton-ver {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 18px;
+  background: #0a0a23;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.boton-ver:hover {
+  background: #ff4081;
+}
+
+/* USUARIO */
+.usuario-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.usuario-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,0.35);
+  padding:8px 14px;
+  border-radius:50px;
+  backdrop-filter:blur(10px);
+}
+
+.usuario-info img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid white;
+}
+
+.usuario-info span{
+  font-weight:600;
+  color:#222;
+}
+
+/*codigo para la letra inicial del usuario*/
+.avatar-letra{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#ff4081;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  font-weight:700;
+}
+
+.btn-cerrar{
+  border:none;
+  background:#ff4081;
+  color:white;
+  padding:10px 18px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.3s;
+}
+
+.btn-cerrar:hover{
+  transform:scale(1.05);
+  background:#e73370;
+}
+
+  </style>
+
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+
+      <a href="index.html">
+        <img src="PIÑATAS/logo.jpg" class="logo" alt="Logo MAR PIÑATAS">
+      </a>
+
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+
+      <ul class="nav-links" id="nav-links">
+  <li><a href="index.html">🏠 Inicio</a></li>
+  <li><a href="FAVORITO.html">❤️ Favoritos</a></li>
+  <!-- BOTON LOGIN -->
+  <li id="btnLogin">
+    <a href="login.html">🧑‍💼 Iniciar Sesión</a>
+  </li>
+  <!-- AREA USUARIO -->
+  <li class="usuario-area" id="usuarioArea" style="display:none;">
+    <div class="usuario-info">
+<div id="fotoUsuario" class="avatar-letra"></div>
+      <span id="nombreUsuario"></span>
+    </div>
+    <button class="btn-cerrar" onclick="cerrarSesion()">
+      Salir
+    </button>
+  </li>
+</ul>
+</div>
+</nav>
+
+  <!-- TÍTULO -->
+  <h1 class="titulo-principal">PERSONAJES FAVORITOS</h1>
+
+  <!-- GALERÍA DE PRODUCTOS -->
+  <div class="galeria">
+
+    <!-- PRODUCTO 1 Blueybingo -->
+    <div class="tarjeta-producto" data-id="Blueybingo" data-img="PIÑATAS/Blueybingo.jpg" data-titulo="Piñata Caricatura Bluey" data-descripcion="Bluey y Bingo">
+      <div class="corazon-btn">♥</div>
+      <a href="blueybingo.html">
+      <img src="PIÑATAS/Blueybingo.jpg" alt="Piñata Blueybingo">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Caricatura Bluey</h2>
+        <p>Bluey y Bingo</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 2  sulivan -->
+    <div class="tarjeta-producto" data-id="sulivan" data-img="PIÑATAS/SULIVAN.jpg" data-titulo="Piñata Monsters Inc" data-descripcion="Sulivan">
+      <div class="corazon-btn">♥</div>
+      <a href="sulivan.html">
+      <img src="PIÑATAS/SULIVAN.jpg" alt="Piñata Sulivan">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Monsters Inc</h2>
+        <p>Sulivan</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 3  tiana -->
+    <div class="tarjeta-producto" data-id="tiana" data-img="PIÑATAS/PRINCESA.jpg" data-titulo="Piñata La Princesa y el Sapo" data-descripcion="Tiana">
+      <div class="corazon-btn">♥</div>
+      <a href="tiana.html">
+      <img src="PIÑATAS/PRINCESA.jpg" alt="Piñata Princesa Tiana">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata La Princesa y el Sapo</h2>
+        <p>Tiana</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 4  pascal-->
+    <div class="tarjeta-producto" data-id="pascal" data-img="PIÑATAS/CAMALION.jpg" data-titulo="Piñata Enredados Pascal" data-descripcion="Pascal">
+      <div class="corazon-btn">♥</div>
+      <a href="pascal.html">
+      <img src="PIÑATAS/CAMALION.jpg" alt="Piñata Pascal">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Enredados</h2>
+        <p>Pascal</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 5 Bob esponja-->
+    <div class="tarjeta-producto" data-id="bobesponja" data-img="PIÑATAS/Bob esponja.jpg" data-titulo="Piñata Caricatura Bob Esponja" data-descripcion="Bob Esponja">
+      <div class="corazon-btn">♥</div>
+      <a href="bobesponja.html">
+      <img src="PIÑATAS/Bob esponja.jpg" alt="Piñata Bob esponja">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Caricatura Bob Esponja</h2>
+        <p>Bob Esponja</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 6 Burro -->
+    <div class="tarjeta-producto" data-id="burro" data-img="PIÑATAS/Burro.jpg" data-titulo="Piñata Shrek" data-descripcion="Burro">
+      <div class="corazon-btn">♥</div>
+      <a href="burro.html">
+      <img src="PIÑATAS/Burro.jpg" alt="Piñata Burro">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Shrek</h2>
+        <p>Burro</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 7 Rosita Fresita-->
+    <div class="tarjeta-producto" data-id="rosita" data-img="PIÑATAS/Rosita-Fresita.jpg" data-titulo="Piñata Caricatura Rosita Fresita" data-descripcion="Rosita">
+      <div class="corazon-btn">♥</div>
+      <a href="rosita.html">
+      <img src="PIÑATAS/Rosita-Fresita.jpg" alt="Piñata Rosita">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Caricatura Rosita Fresita</h2>
+        <p>Rosita</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 8 grinch -->
+    <div class="tarjeta-producto" data-id="grinch" data-img="PIÑATAS/GRICH.jpg" data-titulo="Piñata Navidad Grinch" data-descripcion="Grinch">
+      <div class="corazon-btn">♥</div>
+      <a href="grinch.html">
+      <img src="PIÑATAS/GRICH.jpg" alt="Piñata Grinch">
+    </a>
+      <div class="info-producto">
+        <h2>Piñata Navidad</h2>
+        <p>Grinch</p>
+      </div>
+    </div>
+
+        <!-- PRODUCTO 9 Russell -->
+        <div class="tarjeta-producto" data-id="russell" data-img="PIÑATAS/RUSSELL.jpg" data-titulo="Piñata Up: Una Aventura De Altura" data-descripcion="Russell">
+          <div class="corazon-btn">♥</div>
+          <a href="russell.html">
+          <img src="PIÑATAS/RUSSELL.jpg" alt="Piñata Russell">
+        </a>
+          <div class="info-producto">
+            <h2>Piñata Up: Una Aventura De Altura</h2>
+            <p>Russell</p>
+          </div>
+        </div>
+        
+                <!-- PRODUCTO 10 cenicienta -->
+                <div class="tarjeta-producto" data-id="cenicienta" data-img="PIÑATAS/cenicienta.jpg" data-titulo="Piñata Princesa Disney" data-descripcion="Cenicienta">
+                  <div class="corazon-btn">♥</div>
+                  <a href="cenicienta.html">
+                  <img src="PIÑATAS/cenicienta.jpg" alt="Piñata Cenicienta">
+                </a>
+                  <div class="info-producto">
+                    <h2>Piñata Princesa Disney</h2>
+                    <p>Cenicienta</p>
+                  </div>
+                </div> 
+        
+                <!-- PRODUCTO 11 Shrek -->
+                <div class="tarjeta-producto" data-id="Shrek" data-img="PIÑATAS/Shrek.jpg" data-titulo="Piñata Shrek" data-descripcion="Shrek">
+                  <div class="corazon-btn">♥</div>
+                  <a href="Shrek.html">
+                  <img src="PIÑATAS/Shrek.jpg" alt="Piñata Shrek">
+                </a>
+                  <div class="info-producto">
+                    <h2>Piñata Shrek</h2>
+                    <p>Shrek</p>
+                  </div>
+                </div>                   
+                
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    // Menú
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
+
+// FAVORITOS CON VALIDACION DE SESION
+document.querySelectorAll(".corazon-btn").forEach(corazon => {
+
+  corazon.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    // VERIFICAR SESION
+    const usuarioActivo =
+      JSON.parse(localStorage.getItem("usuarioActivo"));
+
+    // SI NO HAY SESION
+    if(!usuarioActivo){
+
+      alert("Debes iniciar sesión para agregar favoritos ❤️");
+
+      window.location.href = "login.html";
+
+      return;
+    }
+
+    // DATOS DEL PRODUCTO
+    const card = corazon.parentElement;
+
+    const id = card.dataset.id;
+    const img = card.dataset.img;
+    const titulo = card.dataset.titulo;
+    const descripcion = card.dataset.descripcion;
+
+    // OBTENER FAVORITOS
+    let favoritos =
+      JSON.parse(localStorage.getItem("favoritos")) || [];
+
+    // SI NO EXISTE -> AGREGAR
+    if (!favoritos.some(f => f.id === id)) {
+
+      favoritos.push({
+        id,
+        img,
+        titulo,
+        descripcion
+      });
+
+      corazon.classList.add("activo");
+
+      alert("Producto agregado a favoritos ❤️");
+
+    } else {
+
+      // ELIMINAR FAVORITO
+      favoritos =
+        favoritos.filter(f => f.id !== id);
+
+      corazon.classList.remove("activo");
+
+      alert("Producto eliminado de favoritos ❌");
+    }
+
+    // GUARDAR
+    localStorage.setItem(
+      "favoritos",
+      JSON.stringify(favoritos)
+    );
+
+  });
+
+});
+
+    // Abrir página individual
+    document.querySelectorAll(".tarjeta-producto").forEach(card => {
+      card.addEventListener("click", e => {
+        if (e.target.classList.contains("corazon-btn")) return;
+        window.location.href = card.dataset.id + ".html";
+      });
+    });
+
+// -------------------------------
+// MENÚ MÓVIL
+// -------------------------------
+document.getElementById("menu-toggle").onclick = () => {
+    document.getElementById("nav-links").classList.toggle("show");
+};
+
+/* USUARIO ACTIVO */
+const usuarioActivo =
+  JSON.parse(localStorage.getItem("usuarioActivo"));
+
+if(usuarioActivo){
+
+  /* MOSTRAR AREA USUARIO */
+  document.getElementById("usuarioArea").style.display = "flex";
+
+  /* OCULTAR LOGIN */
+  document.getElementById("btnLogin").style.display = "none";
+
+  /* NOMBRE */
+  document.getElementById("nombreUsuario").textContent =
+    usuarioActivo.nombre || "Usuario";
+
+/* INICIAL DEL NOMBRE */
+document.getElementById("fotoUsuario").textContent =
+  usuarioActivo.nombre.charAt(0).toUpperCase();
+
+}
+
+function cerrarSesion(){
+
+  // ELIMINAR SESION
+  localStorage.removeItem("usuarioActivo");
+
+  // ELIMINAR FAVORITOS
+  localStorage.removeItem("favoritos");
+
+  // RECARGAR PAGINA
+  window.location.reload();
+
+}
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAR DE PIÑATAS</title>
+
+<style>
+
+/* ---------------------------------------------------
+   FUENTE GENERAL + FONDO
+--------------------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  background: linear-gradient(135deg, #ff69b4, #80c0ff);
+  background-attachment: fixed;
+  background-size: cover;
+
+  padding-top: 100px !important; /* Para que el navbar no tape el contenido */
+}
+
+/* ---------------------------------------------------
+   NAVBAR
+--------------------------------------------------- */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.nav-container {
+  width: 95%;
+  max-width: 1200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* LINKS */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #222;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.6);
+  transform: scale(1.05);
+}
+
+/* MENU MOVIL */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #222;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 85px;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+    background: rgba(255,255,255,0.4);
+    padding: 15px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}
+
+/* ---------------------------------------------------
+   TITULO
+--------------------------------------------------- */
+.titulo-principal {
+  margin: 40px 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* ---------------------------------------------------
+   CATEGORIAS
+--------------------------------------------------- */
+.categorias {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin: 40px auto;
+}
+
+.categoria-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categoria img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+.categoria-texto {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------
+   SECCIÓN DESTACADA
+--------------------------------------------------- */
+.seccion-destacada {
+  max-width: 1500px;
+  margin: 40px auto;
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+}
+
+/* GALERÍA */
+.contenedor-productos {
+  width: 65%;
+  background: rgba(255,255,255,0.08);
+  border-radius: 30px;
+  padding: 30px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+/* TARJETA */
+.tarjeta-producto {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 20px; /* EL VOLOR ORIGINAL ERA 2OPX*/
+  padding: 15px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+  position: relative;
+  overflow: hidden;
+  
+}
+
+/* Hover */
+.tarjeta-producto:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Imagen */
+.tarjeta-producto img,
+.producto-img {
+  width: 320px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.4s ease;
+}
+
+/* Zoom */
+.tarjeta-producto:hover img {
+  transform: scale(1.1);
+}
+
+/* TEXTO DERECHO */
+.contenedor-info {
+  width: 35%;
+  background: rgba(255,255,255,0.18);
+  border-radius: 25px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+}
+.tarjeta-producto h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.tarjeta-producto p {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------------
+  boton
+-----------------------------------------------------*/
+.boton-ver{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 24px;
+  background:#25D366;
+  color:white;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:16px;
+  transition:0.3s ease;
+  box-shadow:0 6px 15px rgba(0,0,0,0.25);
+}
+
+.boton-ver:hover{
+  transform:translateY(-3px);
+  background:#1ebe5d;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE SECCIÓN
+--------------------------------------------------- */
+@media (max-width: 900px) {
+  .seccion-destacada {
+    flex-direction: column;
+  }
+
+  .contenedor-productos,
+  .contenedor-info {
+    width: 100%;
+  }
+}
+/* ---------------------------------------------------
+   BANNER PRINCIPAL
+--------------------------------------------------- */
+
+.banner-seccion{
+  max-width:1200px;
+  margin:50px auto;
+  height:320px;
+  position:relative;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+
+.banner-seccion img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.banner-texto{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.25);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+  text-align:center;
+}
+
+.banner-texto h1{
+  font-size:2.5rem;
+  margin:0;
+  font-weight:800;
+}
+
+.banner-texto p{
+  font-size:1.2rem;
+  margin-top:10px;
+}
+
+@media(max-width:768px){
+
+  .banner-seccion{
+    height:220px;
+    margin:30px 15px;
+  }
+
+  .banner-texto h1{
+    font-size:1.6rem;
+  }
+
+  .banner-texto p{
+    font-size:1rem;
+  }
+
+}
+/* USUARIO */
+.usuario-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.usuario-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,0.35);
+  padding:8px 14px;
+  border-radius:50px;
+  backdrop-filter:blur(10px);
+}
+
+.usuario-info img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid white;
+}
+
+.usuario-info span{
+  font-weight:600;
+  color:#222;
+}
+
+/*codigo para la letra inicial del usuario*/
+.avatar-letra{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#ff4081;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  font-weight:700;
+}
+
+.btn-cerrar{
+  border:none;
+  background:#ff4081;
+  color:white;
+  padding:10px 18px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.3s;
+}
+
+.btn-cerrar:hover{
+  transform:scale(1.05);
+  background:#e73370;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html">
+      <img src="PIÑATAS/logo.jpg" class="logo">
+    </a>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+<ul class="nav-links" id="nav-links">
+
+  <li><a href="index.html">🏠 Inicio</a></li>
+  <li><a href="FAVORITO.html">❤️ Favoritos</a></li>
+  <!-- BOTON LOGIN -->
+  <li id="btnLogin">
+    <a href="login.html">🧑‍💼 Iniciar Sesión</a>
+  </li>
+  <!-- AREA USUARIO -->
+  <li class="usuario-area" id="usuarioArea" style="display:none;">
+    <div class="usuario-info">
+<div id="fotoUsuario" class="avatar-letra"></div>
+      <span id="nombreUsuario"></span>
+    </div>
+    <button class="btn-cerrar" onclick="cerrarSesion()">
+      Salir
+    </button>
+  </li>
+</ul>
+  </div>
+</nav>
+
+
+
+<!-- BANNER PRINCIPAL -->
+<div class="banner-seccion">
+
+  <img src="PIÑATAS/banner-mar-pinatas.jpg"
+       alt="MAR PIÑATAS">
+
+  <div class="banner-texto">
+    <h1>🎉 BIENVENIDOS A MAR PIÑATAS</h1>
+    <p>Diseños únicos hechos con amor</p>
+  </div>
+
+</div>
+<div class="categorias">
+  <div class="categoria-item">
+    <a href="PERSONAJES.html" class="categoria">
+      <img src="PIÑATAS/SULIVAN.jpg">
+    </a>
+    <p class="categoria-texto">PERSONAJES<br>FAVORITOS</p>
+  </div>
+
+  <div class="categoria-item">
+    <a href="NUMEROS.html" class="categoria">
+      <img src="PIÑATAS/HULK.jpg">
+    </a>
+    <p class="categoria-texto">NÚMEROS<br>PERSONALIZADOS</p>
+  </div>
+
+  <div class="categoria-item">
+    <a href="Perzonalizadas.html" class="categoria">
+      <img src="PIÑATAS/HUEVO.jpg">
+    </a>
+    <p class="categoria-texto">PIÑASTAS<br>PERSONALIZADAS</p>
+  </div>
+</div>
+
+<div class="seccion-destacada">
+
+  <div class="contenedor-productos">
+    <div class="galeria">
+
+      <div class="tarjeta-producto">
+        <img src="PIÑATAS/Reno.jpg">
+        <div class="info-producto">
+          <h2>Piñata Personalizada</h2>
+          <p>Reno de Navidad</p>
+        </div>
+      </div>
+
+      <div class="tarjeta-producto">
+        <img src="PIÑATAS/Corona.jpg">
+        <div class="info-producto">
+          <h2>Piñata Personalizada</h2>
+          <p>Corona</p>
+        </div>
+      </div>
+
+      <div class="tarjeta-producto">
+        <img src="PIÑATAS/Gallo.jpg">
+        <div class="info-producto">
+          <h2>Piñata Personalizada</h2>
+          <p>Gallo</p>
+        </div>
+      </div>
+
+      <div class="tarjeta-producto">
+        <img src="PIÑATAS/Paw-patrol-_2.jpg">
+        <div class="info-producto">
+          <h2>Piñata Personalizada</h2>
+          <p>Paw Patrol #2</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="contenedor-info">
+    <h2>🎉 Piñatas Personalizadas 🎉</h2>
+    <p>Nuestra Historia 😊</p>
+    <p>
+      Mi inicio en las piñatas fue lo que me salvo de muchas cosas, para fines de 2023  mientras pasaba 
+      por un mal momento participe en un concurso de piñatas que organizo la empresa para la que  
+      trabajaba en aquel año y por la temporada opte por un reno muy navideño. <br>Mi emprendimiento  
+       realizando piñatas personalizadas inicio gracias a la confianza de una amiga que me pidio  
+       la que sería mi primer piñata siendo un número dos con la temática de paw patrol.
+    </p>
+    <p>
+      Hoy gracias a este bello estrés puedo tener una fuente de ingresos siendo mi propia jefa
+      y teniendo la oportunidad de trabajar en otros proyectos que disfruto.
+      <br>"No rendirse es algo de todos los dias y de apoco se va aprendiendo más".
+    </p>
+    <p>
+      💕🌸Lleva a tu fiesta una Piñata bonita, sumando diversion y alegría a tu festejo.🌸💕
+    </p>
+    <p>
+      💕🌸Diseños únicos para cualquier ocasión.🌸💕
+    </p>
+    <ul>
+      <li>🎉Pedidos con minimo 2 semanas de anticipación.</li>
+      <li>🎉Piñatas tambor.</li> 
+      <li>🎉Resistentes, sin alambres ni grapas.</li>  
+      <li>🎉Hechas con amor.</li>  
+      <li>🎉Personajes favoritos.</li>
+      <li>🎉Tamaños personalizados.</li>
+      <li>🎉 Calidad artesanal.</li>
+    </ul>
+    <a 
+href="https://wa.me/5214641313171?text=Hola,%20quiero%20solicitar%20una%20cotización%20para%20una%20piñata%20personalizada🎉" 
+class="boton-ver" 
+target="_blank">
+📋 Solicitar cotización
+</a>
+
+</div>
+</div>
+<script>
+
+
+/* MENU MOVIL */
+document.getElementById("menu-toggle").onclick = () => {
+  document.getElementById("nav-links").classList.toggle("show");
+};
+
+/* USUARIO ACTIVO */
+const usuarioActivo =
+  JSON.parse(localStorage.getItem("usuarioActivo"));
+
+if(usuarioActivo){
+
+  /* MOSTRAR AREA USUARIO */
+  document.getElementById("usuarioArea").style.display = "flex";
+
+  /* OCULTAR LOGIN */
+  document.getElementById("btnLogin").style.display = "none";
+
+  /* NOMBRE */
+  document.getElementById("nombreUsuario").textContent =
+    usuarioActivo.nombre || "Usuario";
+
+/* INICIAL DEL NOMBRE */
+document.getElementById("fotoUsuario").textContent =
+  usuarioActivo.nombre.charAt(0).toUpperCase();
+
+}
+
+function cerrarSesion(){
+
+  // ELIMINAR SESION
+  localStorage.removeItem("usuarioActivo");
+
+  // ELIMINAR FAVORITOS
+  localStorage.removeItem("favoritos");
+
+  // RECARGAR PAGINA
+  window.location.reload();
+
+}
+
+</script>
+</body>
+</html>
